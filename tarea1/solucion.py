@@ -22,6 +22,21 @@ def diccionaryStructure():
             #dates.append(datalinesF[pd])
         elif (len(datalinesF))<p:
             pass#print("-")
+    
+    for x in range (len(datalinesF)):
+        #p=0+(x*4)-x
+        pd=1+(x*4)-x
+        if (len(datalinesF))-3>=pd:
+            #iD.append(datalinesF[p])
+            dates.append(datalinesF[pd])
+        elif (len(datalinesF))<pd:
+            pass#print("-")
+    
+    datesChain=",".join(dates)
+    datesChain=datesChain.replace(" ","")
+    datesChain=datesChain.replace("_",",")
+    datestmp_list=datesChain.split(",")
+    #print(datestmp_list)
     #print(datalinesF[1])    
     iDchain="\n".join(iD)
     iDchain=iDchain.replace("\n",",")
@@ -34,9 +49,28 @@ def diccionaryStructure():
         del(iDtmp_list[posD])
         pos=pos+1
     del(iDtmp_list[31])
-
-    result=diccionaryConverter(iDtmp_list)
-    print(result)
+    pos=0
+    #print(datestmp_list)
+    #print(datestmp_list[3])
+    while pos<=(len(datestmp_list))-1:
+        if datestmp_list[pos]=="GST":
+            del(datestmp_list[pos])
+        elif datestmp_list[pos]=="ICT":
+            del(datestmp_list[pos])
+        elif datestmp_list[pos]=="CEST":
+            del(datestmp_list[pos])
+        pos=pos+1
+    pos=0
+    while pos<=(len(datestmp_list))-1:
+        posD=pos+1
+        del(datestmp_list[posD])
+        pos=pos+1
+    #print(datestmp_list)
+    datesTravel=diccionaryConverter(datestmp_list)
+    #print(datesTravel)
+    #print("=========================================")
+    iDtravel=diccionaryConverter(iDtmp_list)
+    #print(iDtravel)
     
 
     #print(dates)
