@@ -65,12 +65,21 @@ def diccionaryStructure():
         posD=pos+1
         del(datestmp_list[posD])
         pos=pos+1
-    #print(datestmp_list)
+    
+
+        #yearMonth=",".join(datestmp_list)
+      #  yearMonth=yearMonth.replace("18","c")
+       # yearMonth=yearMonth.replace(",","_")
+        #yearMonth=yearMonth.replace("","-")
+    for x in range(len(datestmp_list)):
+            datestmp_list[x]=datestmp_list[x][0:4]
+
+    #print(yearMonth)
     datesTravel=diccionaryConverter(datestmp_list)
-    #print(datesTravel)
+    print(datesTravel)
     #print("=========================================")
     iDtravel=diccionaryConverter(iDtmp_list)
-    #print(iDtravel)
+    print(iDtravel)
     
 
     #print(dates)
