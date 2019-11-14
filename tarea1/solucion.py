@@ -1,5 +1,8 @@
-def diccionaryConverter(iDtmp_list):
-    return{i:iDtmp_list.count(i) for i in iDtmp_list}
+#Angel Nolasco Serrano
+#A01365726
+
+def diccionaryConverter(lists):
+    return{i:lists.count(i) for i in lists}
 
 def diccionaryStructure():
     iD=[]
@@ -49,6 +52,8 @@ def diccionaryStructure():
         del(iDtmp_list[posD])
         pos=pos+1
     del(iDtmp_list[31])
+    for x in range(len(iDtmp_list)):
+            iDtmp_list[x]=iDtmp_list[x][0:2]
     pos=0
     #print(datestmp_list)
     #print(datestmp_list[3])
@@ -72,16 +77,87 @@ def diccionaryStructure():
        # yearMonth=yearMonth.replace(",","_")
         #yearMonth=yearMonth.replace("","-")
     for x in range(len(datestmp_list)):
-            datestmp_list[x]=datestmp_list[x][0:4]
+            datestmp_list[x]=datestmp_list[x][2:4]
 
-    #print(yearMonth)
+    iDnames=",".join(iDtmp_list)
+    iDnames= iDnames.replace("A6","Emiratos Arabes")
+    iDnames= iDnames.replace("HS","Tailandia")
+    iDnames= iDnames.replace("D9","Alemania")
+    iDnames= iDnames.replace("PP","Brasil")
+    iDnames= iDnames.replace("CF","Canada")
+    iDnames= iDnames.replace("EN","Estados Unidos")
+    iDnames= iDnames.replace("PK","Indonesia")
+    iDnames= iDnames.replace("JA","Japon")
+    iDnames= iDnames.replace("XA","Mexico")
+    iDnames= iDnames.replace("9V","Singapur")
+    iDnames= iDnames.replace("A1","Catar")
+    iDtmp_list=iDnames.split(",")
+    
+    months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+    for month in range(len(datestmp_list)):
+        intMonth=int(datestmp_list[month])
+        datestmp_list[month]=months[intMonth-1]
+    
+    
+     #print(yearMonth)
     datesTravel=diccionaryConverter(datestmp_list)
     print(datesTravel)
     #print("=========================================")
     iDtravel=diccionaryConverter(iDtmp_list)
     print(iDtravel)
-    
 
+    data.close()
+    monthsS=list(datesTravel.keys())
+    timesS=list(datesTravel.values())
+    timesI=list(datesTravel.values())
+    for x in range(len(timesS)):
+        timesS[x]=str(timesS[x])
+    
+    placesS=list(iDtravel.keys())
+    zonesS=list(iDtravel.values())
+    zonesI=list(iDtravel.values())
+    for x in range(len(zonesS)):
+        zonesS[x]=str(zonesS[x])
+    #monthsS=(",").join(monthsS)
+    #timesS=(",").join(timesS)
+    #monthsS=monthsS.replace(",","\n")
+    #timesS=timesS.replace(",","\n")
+    #print(timesS)
+    #timesS=timesS.replace(",",",,")
+    #timesS=timesS.replace()
+    print(timesI)
+    solutions=open('resultados.csv','w+')
+    solutions.write("Meses,numero de vuelos totales mensuales,porcentaje de vuelos a nivel mundial,\n")
+    #solutions.write(monthsS)
+    #solutions.write(timesS)
+    solutions.close()
+    tot=0
+    for i in range(len(timesI)):
+        tot=tot+timesI[i]
+    print(tot)
+    solutions=open('resultados.csv','a+')
+    for x in range(len(timesS)):
+        temp=monthsS[x]+","+timesS[x]+","+"%"+str(round((timesI[x]*100)/tot,4))+",\n"
+        solutions.write(temp)
+    solutions.close()
+
+    tot=0
+    for i in range(len(zonesI)):
+        tot=tot+zonesI[i]
+
+    solutions=open('resultados.csv','a+')
+    solutions.write("\n")
+    solutions.write("\nPaises,viajes totales por pais,porcentaje de viajes a nivel mundial,\n")
+    print(tot)
+    for x in range(len(zonesS)):
+        temp=placesS[x]+","+zonesS[x]+","+"%"+str(round((zonesI[x]*100)/tot,4))+",\n"
+        solutions.write(temp)
+    solutions.close()
+        
+
+
+
+    #print(datestmp_list)
     #print(dates)
         #print(datalinesF[p])
         #print(datalinesF[pd])
