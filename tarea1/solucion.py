@@ -35,8 +35,8 @@ def diccionaryStructure():
     iDchain=iDchain.replace("\n",",")
     iDchain=iDchain.replace(" ","")
     iDtmp_list=iDchain.split(",")
-
-    pos=0
+    #filtrado de matriculas de aviones, el ciclo while elimina cualquier elemento dentro de la posición asignada en el ciclo mientras que el ciclo for acorta las matriculas para conservar únicamente los primeros 2 dígitos de identificación, en este punto ya únicamente hay matrículas en la lista.
+    pos=0#la constante 2+14 se coloca para evitar una mala delimitación para el cíclo, expresarlo de esta manera evita que el programa falle
     while pos<=(len(iDtmp_list))/2+14:
         posD=pos+1
         del(iDtmp_list[posD])
@@ -44,8 +44,8 @@ def diccionaryStructure():
     del(iDtmp_list[31])
     for x in range(len(iDtmp_list)):
             iDtmp_list[x]=iDtmp_list[x][0:2]
-    
-    pos=0
+    #Al igual que con las matrículas, los cíclos filtran el contenido de las listas para conservar datos útiles, en este caso, las fechas.
+    pos=0# La diferencia fundamental es que en el caso de las fechas, se hace un subproceso de filtración, donde antes de eliminar el formato sobrante de fehca, se eliminan las zonas horarias
     while pos<=(len(datestmp_list))-1:
         if datestmp_list[pos]=="GST":
             del(datestmp_list[pos])
@@ -60,10 +60,10 @@ def diccionaryStructure():
         posD=pos+1
         del(datestmp_list[posD])
         pos=pos+1
-
+    #con este ciclo simplemente se reajusta el formato de la fecha
     for x in range(len(datestmp_list)):
             datestmp_list[x]=datestmp_list[x][2:4]
-
+    #Aqui se cambian las claves de identificación por su respectivo nombre para mayor facilidad de lectura para el usuario
     iDnames=",".join(iDtmp_list)
     iDnames= iDnames.replace("A6","Emiratos Arabes")
     iDnames= iDnames.replace("HS","Tailandia")
@@ -77,22 +77,21 @@ def diccionaryStructure():
     iDnames= iDnames.replace("9V","Singapur")
     iDnames= iDnames.replace("A1","Catar")
     iDtmp_list=iDnames.split(",")
-    
+    #En este ciclo for se cambia el formato numérico del mes por su respectivo nombre, convirtiendo el string del formato original en un entero con el propósito de ser utilizado como posición el la lista months
     months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
     for month in range(len(datestmp_list)):
         intMonth=int(datestmp_list[month])
         datestmp_list[month]=months[intMonth-1]
-
+    #ambas variables reciben como parámetros los datos finales obtenidos en las listas para convertirse en diccionarios
     datesTravel=diccionaryConverter(datestmp_list)
     iDtravel=diccionaryConverter(iDtmp_list)
     data.close()
-
+    #este segmento de codigo separa los componentes de los diccionarios previamente creados en [texto] y [valor numerico], obtiene una copia de los valores numéricos de los mismos y mantiene una copia en formato de texto
     monthsS=list(datesTravel.keys())
     timesS=list(datesTravel.values())
     timesI=list(datesTravel.values())
     for x in range(len(timesS)):
         timesS[x]=str(timesS[x])
-    
     placesS=list(iDtravel.keys())
     zonesS=list(iDtravel.values())
     zonesI=list(iDtravel.values())
