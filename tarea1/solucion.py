@@ -1,5 +1,6 @@
 #Angel Nolasco Serrano
 #A01365726
+# -*- coding: utf-8 -*-
 def diccionaryConverter(lists):
     return{i:lists.count(i) for i in lists}
 
@@ -9,28 +10,27 @@ def diccionaryStructure():
     data= open('datos_vuelos.csv','r')
     datalines=data.read()
     pos=datalines.find("\n")
-    datalinesN=datalines[pos+1:]
+    datalinesN=datalines[pos+1:] #Se inicia despues del \n de la linea principal para asi leer unicamente los datos del documento y organizarlo en lista
     datalinesF=datalinesN.split(",")
-
+    #Para distinguir las matriculas del resto del documento se observa que las posiciones de estas es constantes, por lo que se plantéa una ecuación cuyo resultado es la posición de la matrícula, la cual es la única que se agrega de todo el segmento
     for x in range (len(datalinesF)):
         p=0+(x*4)-x
         if (len(datalinesF))>=p:
             iD.append(datalinesF[p])
         elif (len(datalinesF))<p:
             pass
-    
+    #Al igual que las matrículas, el cambio de posición es constante, por lo que se recorre un espacio a comparación de la ecuación original
     for x in range (len(datalinesF)):
         pd=1+(x*4)-x
-        if (len(datalinesF))-3>=pd:
+        if (len(datalinesF))-3>=pd:#-3 permite omitir los 3 ecabezados que estaban al inicio del documento
             dates.append(datalinesF[pd])
         elif (len(datalinesF))<pd:
             pass
-    
+    #El segmento siguiente transforma las listas en cadenas de caracteres para filtrar los espacios inecesarios, así como los caracteres que impiden la filtración de resultados. Despues del proceso vuelve a convertirlos en listas
     datesChain=",".join(dates)
     datesChain=datesChain.replace(" ","")
     datesChain=datesChain.replace("_",",")
     datestmp_list=datesChain.split(",")
-   
     iDchain="\n".join(iD)
     iDchain=iDchain.replace("\n",",")
     iDchain=iDchain.replace(" ","")
@@ -121,7 +121,9 @@ def diccionaryStructure():
     for x in range(len(zonesS)):
         temp=placesS[x]+","+zonesS[x]+","+"%"+str(round((zonesI[x]*100)/tot,4))+",\n"
         solutions.write(temp)
-    solutions.write("")
+    solutions.write("\n")
+    solutions.write("Diccionario de los meses/organizacion fechas: "+str(datesTravel))
+    solutions.write("\nDiccionario de los registros de los vuelos/paises: "+str(iDtravel))
     solutions.close()
   
 diccionaryStructure()
