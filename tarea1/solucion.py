@@ -97,12 +97,12 @@ def diccionaryStructure():
     zonesI=list(iDtravel.values())
     for x in range(len(zonesS)):
         zonesS[x]=str(zonesS[x])
-
+    #Se crea un nuevo archivo con permisos de sobreescritura con el propósito de almacenar los resultados en un nuevo archivo y despues se cierra
     solutions=open('resultados.csv','w+')
     solutions.write("Meses,numero de vuelos totales mensuales,porcentaje de vuelos a nivel mundial,\n")
     solutions.close()
-
-    tot=0
+    #Almacenamiento de datos obtenidos a partir de la concatenación de los componentes de los diccionarios, tambien se utiliza una de las copias de los componentes numericos para convertirlos en enteros y utilizarlos para la obtención de los porcentajes 
+    tot=0#despues de almacenarlos se cierra el archivo
     for i in range(len(timesI)):
         tot=tot+timesI[i]
     solutions=open('resultados.csv','a+')
@@ -110,7 +110,7 @@ def diccionaryStructure():
         temp=monthsS[x]+","+timesS[x]+","+"%"+str(round((timesI[x]*100)/tot,4))+",\n"
         solutions.write(temp)
     solutions.close()
-
+    #Almacenamiento de datos de segunda tabla
     tot=0
     for i in range(len(zonesI)):
         tot=tot+zonesI[i]
