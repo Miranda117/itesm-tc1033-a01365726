@@ -1,4 +1,4 @@
-Meses,numero de vuelos totales mensuales,porcentaje de vuelos,
+Meses,numero de vuelos totales mensuales,porcentaje de vuelos a nivel mundial,
 Enero,5,%16.129,
 Febrero,2,%6.4516,
 Diciembre,4,%12.9032,
@@ -10,7 +10,7 @@ Septiembre,2,%6.4516,
 Marzo,2,%6.4516,
 
 
-Paises,viajes totales por pais,porcentaje de viajes,
+Paises,viajes totales por pais,porcentaje de viajes a nivel mundial,
 Emiratos Arabes,4,%12.9032,
 Tailandia,10,%32.2581,
 Alemania,4,%12.9032,
