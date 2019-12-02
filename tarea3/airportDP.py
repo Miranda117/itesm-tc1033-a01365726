@@ -4,23 +4,6 @@
 import csv
 from airportUI import *
 #Gran parte de la esstructura fue hecha en el salon de clases
-class Airport:
-	def __init__(self):
-		self.tracks = None
-		self.airplanes = None
-		self.passengers = None
-		self.pilots = None
-		self.attendants = None
-		self.travellers = None
-
-	def Populate_airport(self):
-		self.attendants = AirportAD().read_attendants_file()
-		self.flights = AirportAD().read_flights_file()
-		self.passengers = AirportAD().read_passengers_file()
-		self.pilots = AirportAD().read_pilots_file()
-		self.planes = AirportAD().read_planes_file()
-		self.travellers = AirportAD().read_travellers_file()
-
 class Passengers:
 	def __init__(self, _flight, _passport, _flight_class, _seat, _location):
 		self.flight = _flight
@@ -82,10 +65,45 @@ class Flights:
 class Travellers(Pilot):
 	pass
 
+#el nombre de la clase se da por convencion, ya que se considera util sabiendo que es la que se encargara de la escritura del reporte
+class Csv:
+	def csv_writer(self):
+		global yymmdDate
+		global hhmmTime
+		yymmdDate = user_op().dateInfo()
+		hhmmTime = user_op().timeInfo()
+		file = open("statistics.csv", "w+")
+		file.write("date, time, # empty tracks, # busy tracks, # passengers in check-in, # passengers in security, # passengers boarded, # flights landed, # flights departured, available gates, occupied gates")
+		file.write("\n")
+		#el int 11 multiplica a las comillas simples para "ejemplificar" el espacio necesario para los encabezados del documento (los que estan en amarillo en el file.write)
+		file.write("," * 11)
+		file.close()
+
+		file = open("statistics.csv", "r")
+		lst = list(csv.reader(file))
+		file.close()
+		#Este "Formato de registro" es escrito de esta forma ya que asi es mas facil acomodar toda la informacion extraida de los archivos tomando en cuenta que se hizo de modo POO
+		file = open("statistics.csv", "w")
+		lst[1][0] = yymmdDate
+		lst[1][1] = hhmmTime
+		lst[1][2] = tracks_checkMode().nEmpty_tracks(yymmdDate, hhmmTime)
+		lst[1][3] =	tracks_checkMode().nBusy_tracks(count)
+		flight_finder = Checkpoint_check().flight_finder()
+		lst[1][4] = Checkpoint_check().checkIn_counter()
+		lst[1][5] = Checkpoint_check().security_counter()
+		lst[1][6] = Checkpoint_check().boarded_counter()
+		lst[1][7] = Flights_actual().flights_off()
+		lst[1][8] = Flights_actual().flights_taken()
+		lst[1][9] = Gates_check().cAvailable_list()
+		lst[1][10] = Gates_check().cBusy_list()
+
+		csv.writer(file).writerows(lst)
+		file.close()
 
 #En esta clase se procede a leer los archivos csv y clasificarlos de acuerdo al tipo de informacion que estos tienen, cada "clasificacion" tiene una funcion propia
 class AirportAD:
 	#la estructura es identica para la captura de archivos como pilots o travellers, sin embargo, se considera que es mejor que cada uno tenga su propio funcionamiento ya que en un futuro podrian cambiar su contenido
+	#la estructura se basa en el estandar hecho en clase
 	def read_pilots_file(self):
 		pilots_file = open("data/pilots.csv", "r")
 		lines = pilots_file.readlines()
@@ -217,8 +235,7 @@ class AirportAD:
 		return planes
 
 class Checkpoint_check:
-
-	def count_security(self):
+	def security_counter(self):
 		security = 0
 
 		for data_passenger in AirportAD().read_passengers_file().values():
@@ -230,8 +247,7 @@ class Checkpoint_check:
 
 		return security
 	
-	def count_boarded(self):
-
+	def boarded_counter(self):
 		boarded = 0
 
 		for data_passenger in AirportAD().read_passengers_file().values():
@@ -243,7 +259,7 @@ class Checkpoint_check:
 
 		return boarded
 
-	def count_check_in(self):
+	def checkIn_counter(self):
 		check_in = 0
 
 		for data_passenger in AirportAD().read_passengers_file().values():
@@ -255,7 +271,7 @@ class Checkpoint_check:
 
 		return check_in
 	
-	#El principio del for en este metodo es el principio de todos los demas relacionados con conteo y busqueda, de ahi el nombre "cut". Tambien es razon por la que la variable sea globañ
+	#El principio del for en este metodo es el principio de todos los demas relacionados con conteo y busqueda, de ahi el nombre "cut". Tambien es razon por la que la variable sea global, de esa forma se evita la necesidad de replantear su valor
 	def flight_finder(self):
 		global cut
 		#se indica a cut como lista ya que asi es mas facil moverse por la informacion, tambien es importante para el funcionamiento del filtro de vuelos.
@@ -272,9 +288,7 @@ class Checkpoint_check:
 		return cut
 
 class Flights_actual:
-
 	def flights_off(self):
-
 		flights_off = 0
 
 		for flight_data in AirportAD().read_flights_file().values():
@@ -299,8 +313,7 @@ class Flights_actual:
 
 		return taken_flights
 
-class Check_for_tracks:
-
+class tracks_checkMode:
 	def nEmpty_tracks(self, _YYMMDD, _HHMM):
 		#en las siguientes partes del programma, se usa global, lo cual nos permite acceder a la variable, en este caso, desde otras funciones
 		global count
@@ -321,14 +334,15 @@ class Check_for_tracks:
 			plate_flights[id + plate] = [departure_time[0], departure_time[1], arrival_time[0], arrival_time[1]]
 
 		for flight in plate_flights.values():
-			if destiny == "Ciudad de Mexico - MEXICO":
-				if int(flight[2]) == _YYMMDD and int(flight[3]) == _HHMM:
-					count -= 1
-
-			elif origin == "Ciudad de Mexico - MEXICO":
+			
+			if origin == "Ciudad de Mexico - MEXICO":
 				if int(flight[0]) == _YYMMDD and int(flight[1]) == _HHMM:
 					count -= 1
-
+			
+			elif destiny == "Ciudad de Mexico - MEXICO":
+				if int(flight[2]) == _YYMMDD and int(flight[3]) == _HHMM:
+					count -= 1
+			
 		return count
 
 	def nBusy_tracks(self, count):
@@ -337,7 +351,7 @@ class Check_for_tracks:
 		return nBusy_tracks
 
 class Gates_check:
-	def count_available_gates(self):
+	def cAvailable_list(self):
 		aGate_list = []
 		global bGate_list
 		bGate_list = []
@@ -353,17 +367,17 @@ class Gates_check:
 			departure_time = departure.split("_")
 			arrival_time = arrival.split("_")
 
-			if destiny == "Ciudad de Mexico - MEXICO" and str(arriving_gate) not in aGate_list:
-					aGate_list.append(str(arriving_gate))
-
-					if str(arrival_time[0]) == str(yymmdDate) and str(arrival_time[1]) == str(hhmmTime):
-						bGate_list.append(str(arriving_gate))
-
-			elif origin == "Ciudad de Mexico - MEXICO" and str(departure_gate) not in aGate_list:
+			if origin == "Ciudad de Mexico - MEXICO" and str(departure_gate) not in aGate_list:
 					aGate_list.append(str(departure_gate))
 
 					if str(departure_time[2]) == str(yymmdDate) and str(departure_time[3]) == str(hhmmTime):
 						bGate_list.append(str(departure_gate))
+
+			elif destiny == "Ciudad de Mexico - MEXICO" and str(arriving_gate) not in aGate_list:
+					aGate_list.append(str(arriving_gate))
+
+					if str(arrival_time[0]) == str(yymmdDate) and str(arrival_time[1]) == str(hhmmTime):
+						bGate_list.append(str(arriving_gate))
 
 		for gate in bGate_list:
 			aGate_list.remove(gate)
@@ -374,36 +388,3 @@ class Gates_check:
 
 		return bGate_list
 
-#el nombre de la clase se da 
-class Csv:
-	def csv_writer(self):
-		global yymmdDate
-		global hhmmTime
-		yymmdDate = user_op().dateInfo()
-		hhmmTime = user_op().timeInfo()
-		file = open("statistics.csv", "w+")
-		file.write("date, time, # empty tracks, # busy tracks, # passengers in check-in, # passengers in security, # passengers boarded, # flights landed, # flights departured, available gates, occupied gates")
-		file.write("\n")
-		file.write("," * 11)
-		file.close()
-
-		file = open("statistics.csv", "r")
-		lst = list(csv.reader(file))
-		file.close()
-		#Este "Formato de registro" es escrito de esta forma ya que asi es mas facil acomodar toda la informacion extraida de los archivos tomando en cuenta que se hizo de modo POO
-		file = open("statistics.csv", "w")
-		lst[1][0] = yymmdDate
-		lst[1][1] = hhmmTime
-		lst[1][2] = Check_for_tracks().nEmpty_tracks(yymmdDate, hhmmTime)
-		lst[1][3] =	Check_for_tracks().nBusy_tracks(count)
-		flight_finder = Checkpoint_check().flight_finder()
-		lst[1][4] = Checkpoint_check().count_check_in()
-		lst[1][5] = Checkpoint_check().count_security()
-		lst[1][6] = Checkpoint_check().count_boarded()
-		lst[1][7] = Flights_actual().flights_off()
-		lst[1][8] = Flights_actual().flights_taken()
-		lst[1][9] = Gates_check().count_available_gates()
-		lst[1][10] = Gates_check().cBusy_list()
-
-		csv.writer(file).writerows(lst)
-		file.close()
