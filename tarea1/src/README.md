@@ -7,4 +7,4 @@ La solución propuesta es un poco diferente a la planteada por la misma tarea, s
 
 para el funcionamiento del programa se requiere que el archivo "datos_vuelos.csv" no esté vacío y se encuentre en la misma carpeta que el programa "solucion.py"
 
-código github tambien disponible en: 
+código github tambien disponible en: https://github.com/Angel009/itesm-tc1033-a01365726/tree/tarea1/tarea1
