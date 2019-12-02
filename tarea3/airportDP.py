@@ -84,21 +84,21 @@ class Csv:
 		file.close()
 		#Este "Formato de registro" es escrito de esta forma ya que asi es mas facil acomodar toda la informacion extraida de los archivos tomando en cuenta que se hizo de modo POO
 		file = open("statistics.csv", "w")
-		lst[1][0] = yymmdDate
-		lst[1][1] = hhmmTime
-		lst[1][2] = tracks_checkMode().nEmpty_tracks(yymmdDate, hhmmTime)
-		lst[1][3] =	tracks_checkMode().nBusy_tracks(count)
-		flight_finder = Checkpoint_check().flight_finder()
-		lst[1][4] = Checkpoint_check().checkIn_counter()
-		lst[1][5] = Checkpoint_check().security_counter()
-		lst[1][6] = Checkpoint_check().boarded_counter()
-		lst[1][7] = Flights_actual().flights_off()
-		lst[1][8] = Flights_actual().flights_taken()
-		lst[1][9] = Gates_check().cAvailable_list()
-		lst[1][10] = Gates_check().cBusy_list()
+		lst[1][0] = yymmdDate#
+		lst[1][1] = hhmmTime#
+		lst[1][2] = tracks_checkMode().nEmpty_tracks(yymmdDate, hhmmTime)#
+		lst[1][3] =	tracks_checkMode().nBusy_tracks(count)#
+		flight_finder = Checkpoint_check().flight_finder()#
+		lst[1][4] = Checkpoint_check().checkIn_counter()#
+		lst[1][5] = Checkpoint_check().security_counter()#
+		lst[1][6] = Checkpoint_check().boarded_counter()#
+		lst[1][7] = Flights_actual().flights_off()#
+		lst[1][8] = Flights_actual().flights_taken()#
+		lst[1][9] = Gates_check().cAvailable_list()#
+		lst[1][10] = Gates_check().cBusy_list()#
 
-		csv.writer(file).writerows(lst)
-		file.close()
+		csv.writer(file).writerows(lst)#
+		file.close()#
 
 #En esta clase se procede a leer los archivos csv y clasificarlos de acuerdo al tipo de informacion que estos tienen, cada "clasificacion" tiene una funcion propia
 class AirportAD:
@@ -333,54 +333,54 @@ class tracks_checkMode:#
 			arrival_time = arrival.split("_")#
 			plate_flights[id + plate] = [departure_time[0], departure_time[1], arrival_time[0], arrival_time[1]]#
 
-		for flight in plate_flights.values():
+		for flight in plate_flights.values():#
 			
 			if origin == "Ciudad de Mexico - MEXICO":
-				if int(flight[0]) == _YYMMDD and int(flight[1]) == _HHMM:
-					count -= 1
+				if int(flight[0]) == _YYMMDD and int(flight[1]) == _HHMM:#
+					count -= 1#
 			
 			elif destiny == "Ciudad de Mexico - MEXICO":
-				if int(flight[2]) == _YYMMDD and int(flight[3]) == _HHMM:
-					count -= 1
+				if int(flight[2]) == _YYMMDD and int(flight[3]) == _HHMM:#
+					count -= 1#
 			
 		return count
 
-	def nBusy_tracks(self, count):
-		nBusy_tracks =  3 - count
+	def nBusy_tracks(self, count):#
+		nBusy_tracks =  3 - count#
 
-		return nBusy_tracks
+		return nBusy_tracks#
 
-class Gates_check:
-	def cAvailable_list(self):
-		aGate_list = []
-		global bGate_list
-		bGate_list = []
+class Gates_check:#
+	def cAvailable_list(self):#
+		aGate_list = []#
+		global bGate_list#
+		bGate_list = []#
 
-		for flight_data in AirportAD().read_flights_file().values():
+		for flight_data in AirportAD().read_flights_file().values():#
 			arriving_gate = flight_data.arriving_gate
-			departure_gate = flight_data.departure_gate
+			departure_gate = flight_data.departure_gate#
 			destiny = flight_data.destiny
-			origin = flight_data.origin
-			departure = flight_data.departure
+			origin = flight_data.origin#
+			departure = flight_data.departure#
 			arrival = flight_data.arriving
 
 			departure_time = departure.split("_")
 			arrival_time = arrival.split("_")
 
-			if origin == "Ciudad de Mexico - MEXICO" and str(departure_gate) not in aGate_list:
-					aGate_list.append(str(departure_gate))
+			if origin == "Ciudad de Mexico - MEXICO" and str(departure_gate) not in aGate_list:#
+					aGate_list.append(str(departure_gate))#
 
-					if str(departure_time[2]) == str(yymmdDate) and str(departure_time[3]) == str(hhmmTime):
-						bGate_list.append(str(departure_gate))
+					if str(departure_time[2]) == str(yymmdDate) and str(departure_time[3]) == str(hhmmTime):#
+						bGate_list.append(str(departure_gate))#
 
-			elif destiny == "Ciudad de Mexico - MEXICO" and str(arriving_gate) not in aGate_list:
-					aGate_list.append(str(arriving_gate))
-
-					if str(arrival_time[0]) == str(yymmdDate) and str(arrival_time[1]) == str(hhmmTime):
-						bGate_list.append(str(arriving_gate))
+			elif destiny == "Ciudad de Mexico - MEXICO" and str(arriving_gate) not in aGate_list:#
+					aGate_list.append(str(arriving_gate))#
+#
+					if str(arrival_time[0]) == str(yymmdDate) and str(arrival_time[1]) == str(hhmmTime):#
+						bGate_list.append(str(arriving_gate))#
 
 		for gate in bGate_list:
-			aGate_list.remove(gate)
+			aGate_list.remove(gate)#
 
 		return aGate_list
 
