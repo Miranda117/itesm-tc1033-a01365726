@@ -4,13 +4,13 @@
 import csv
 from airportUI import *
 #Gran parte de la esstructura fue hecha en el salon de clases
-class Passengers:
-	def __init__(self, _flight, _passport, _flight_class, _seat, _location):
-		self.flight = _flight
-		self.passport = _passport
-		self.flight_class = _flight_class
-		self.seat = _seat
-		self.location = _location
+class Passengers:#
+	def __init__(self, _flight, _passport, _flight_class, _seat, _location):#
+		self.flight = _flight#
+		self.passport = _passport#
+		self.flight_class = _flight_class#
+		self.seat = _seat#
+		self.location = _location#
 
 class Planes:#
 	def __init__(self, _plate, _manufacturer, _model, _passengers_capacity, _luggage_capacity, _max_speed):#
@@ -22,19 +22,19 @@ class Planes:#
 		self.max_speed = _max_speed#
 
 
-class Pilot:
-	def __init__(self, _passport, _forename, _surname, _date_of_birth, _country, _marital_status, _gender):
-		self.passport = _passport
-		self.forename = _forename
-		self.surname = _surname
-		self.date_of_birth = _date_of_birth
-		self.country = _country
-		self.gender = _gender
-		self.marital_status = _marital_status
+class Pilot:#
+	def __init__(self, _passport, _forename, _surname, _date_of_birth, _country, _marital_status, _gender):#
+		self.passport = _passport#
+		self.forename = _forename#
+		self.surname = _surname#
+		self.date_of_birth = _date_of_birth#
+		self.country = _country#
+		self.gender = _gender#
+		self.marital_status = _marital_status#
 
 #Esta clase, así como travellers, van de inicio con el pass porque, a diferencia de las demás, es más conveniente que se inicialice de esa forma
-class Attendants(Pilot):
-	pass
+class Attendants(Pilot):#
+	pass#
 
 
 #Se considera necesario especificar que en este caso, para lidiar con caracteres especiales, se opto por modificarlos desde el csv, ya que, despues de intentar de distintas formas, no fue posible procesar los caracteres
@@ -62,8 +62,8 @@ class Flights:#
 		self.attendants = _attendants#
 
 #Esta clase, así como attendants, van de inicio con el pass porque, a diferencia de las demás, es más conveniente que se inicialice de esa forma
-class Travellers(Pilot):
-	pass
+class Travellers(Pilot):#
+	pass#
 
 #el nombre de la clase se da por convencion, ya que se considera util sabiendo que es la que se encargara de la escritura del reporte
 class Csv:
@@ -234,57 +234,57 @@ class AirportAD:
 			planes[plate] = plane
 		return planes
 
-class Checkpoint_check:
-	def security_counter(self):
-		security = 0
+class Checkpoint_check:#
+	def security_counter(self):#
+		security = 0#
 
-		for data_passenger in AirportAD().read_passengers_file().values():
-			flight = data_passenger.flight
-			location = data_passenger.location
-			for plate in cut:
-				if flight == plate[0:5] and str(location) == "seguridad\n":
+		for data_passenger in AirportAD().read_passengers_file().values():#
+			flight = data_passenger.flight#
+			location = data_passenger.location#
+			for plate in cut:#
+				if flight == plate[0:5] and str(location) == "seguridad\n":#
 						security += 1
 
-		return security
-	
-	def boarded_counter(self):
-		boarded = 0
+		return security#
+	#
+	def boarded_counter(self):#
+		boarded = 0#
 
-		for data_passenger in AirportAD().read_passengers_file().values():
-			flight = data_passenger.flight
-			location = data_passenger.location
+		for data_passenger in AirportAD().read_passengers_file().values():#
+			flight = data_passenger.flight#
+			location = data_passenger.location#
 			for plate in cut:
-				if flight == plate[0:5] and str(location) == "abordado\n":
+				if flight == plate[0:5] and str(location) == "abordado\n":#
 						boarded += 1
 
-		return boarded
+		return boarded#
 
 	def checkIn_counter(self):
-		check_in = 0
+		check_in = 0#
 
-		for data_passenger in AirportAD().read_passengers_file().values():
+		for data_passenger in AirportAD().read_passengers_file().values():#
 			flight = data_passenger.flight
-			location = data_passenger.location
+			location = data_passenger.location#
 			for plate in cut:
-				if flight == plate[0:5] and str(location) == "check-in\n":
+				if flight == plate[0:5] and str(location) == "check-in\n":##
 						check_in += 1
 
-		return check_in
+		return check_in#
 	
 	#El principio del for en este metodo es el principio de todos los demas relacionados con conteo y busqueda, de ahi el nombre "cut". Tambien es razon por la que la variable sea global, de esa forma se evita la necesidad de replantear su valor
-	def flight_finder(self):
+	def flight_finder(self):#
 		global cut
 		#se indica a cut como lista ya que asi es mas facil moverse por la informacion, tambien es importante para el funcionamiento del filtro de vuelos.
 		cut = []
-		for flight in plate_flights.values():
-			if int(flight[0]) == yymmdDate:
-				if int(flight[1]) <= hhmmTime:
-					cut.append(list(plate_flights.keys())[list(plate_flights.values()).index(flight)])
+		for flight in plate_flights.values():#
+			if int(flight[0]) == yymmdDate:#
+				if int(flight[1]) <= hhmmTime:#
+					cut.append(list(plate_flights.keys())[list(plate_flights.values()).index(flight)])#
 
-			elif flight[2] == yymmdDate:
-				if int(flight[3]) <= hhmmTime:
-					cut.append(list(plate_flights.keys())[list(plate_flights.values()).index(flight)])
-
+			elif flight[2] == yymmdDate:#
+				if int(flight[3]) <= hhmmTime:#
+					cut.append(list(plate_flights.keys())[list(plate_flights.values()).index(flight)])#
+#
 		return cut
 
 class Flights_actual:#
@@ -313,25 +313,25 @@ class Flights_actual:#
 
 		return taken_flights#
 
-class tracks_checkMode:
-	def nEmpty_tracks(self, _YYMMDD, _HHMM):
+class tracks_checkMode:#
+	def nEmpty_tracks(self, _YYMMDD, _HHMM):#
 		#en las siguientes partes del programma, se usa global, lo cual nos permite acceder a la variable, en este caso, desde otras funciones
-		global count
-		global plate_flights
-		plate_flights = {}
+		global count#
+		global plate_flights#
+		plate_flights = {}#
 		count = 3
 		#El conteo de vuelos se centra en "Ciudad de Mexico, Mexico" porque es de los datos de mayor repeticion, de esa forma es mas sencilo "subdividir" el documento
-		for flight in AirportAD().read_flights_file().values():
-			departure = flight.departure
-			arrival = flight.arriving
-			id = flight.id
-			plate = flight.plate
-			destiny = flight.destiny
-			origin = flight.origin
+		for flight in AirportAD().read_flights_file().values():#
+			departure = flight.departure#
+			arrival = flight.arriving#
+			id = flight.id#
+			plate = flight.plate#
+			destiny = flight.destiny#
+			origin = flight.origin#
 
-			departure_time = departure.split("_")
-			arrival_time = arrival.split("_")
-			plate_flights[id + plate] = [departure_time[0], departure_time[1], arrival_time[0], arrival_time[1]]
+			departure_time = departure.split("_")#
+			arrival_time = arrival.split("_")#
+			plate_flights[id + plate] = [departure_time[0], departure_time[1], arrival_time[0], arrival_time[1]]#
 
 		for flight in plate_flights.values():
 			
