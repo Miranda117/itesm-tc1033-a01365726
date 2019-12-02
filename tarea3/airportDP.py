@@ -12,14 +12,14 @@ class Passengers:
 		self.seat = _seat
 		self.location = _location
 
-class Planes:
-	def __init__(self, _plate, _manufacturer, _model, _passengers_capacity, _luggage_capacity, _max_speed):
-		self.plate = _plate
-		self.manufacturer = _manufacturer
-		self.model = _model
-		self.passengers_capacity = _passengers_capacity
-		self.luggage_capacity = _luggage_capacity
-		self.max_speed = _max_speed
+class Planes:#
+	def __init__(self, _plate, _manufacturer, _model, _passengers_capacity, _luggage_capacity, _max_speed):#
+		self.plate = _plate#
+		self.manufacturer = _manufacturer#
+		self.model = _model#
+		self.passengers_capacity = _passengers_capacity#
+		self.luggage_capacity = _luggage_capacity#
+		self.max_speed = _max_speed#
 
 
 class Pilot:
@@ -44,22 +44,22 @@ class Attendants(Pilot):
                  #errors='ignore') as fdata:
 # -*- coding: utf-8 -*-
 #Dado que no se obtenian los resultados esperados, se decidio eliminarlos desde el archivo.
-class Flights:
-	def __init__(self, _id, _plate, _origin, _destiny, _departure, _arriving, _status, _departure_gate, _take_off_track, _arriving_gate, _landing_track, _pilot, _copilot, _attendants):
-		self.id = _id
-		self.plate = _plate
-		self.origin = _origin
-		self.destiny = _destiny
-		self.departure = _departure
-		self.arriving = _arriving
-		self.status = _status
-		self.departure_gate = _departure_gate
-		self.take_off_track = _take_off_track
-		self.arriving_gate = _arriving_gate
-		self.landing_track = _landing_track
-		self.pilot = _pilot
-		self.copilot = _copilot
-		self.attendants = _attendants
+class Flights:#
+	def __init__(self, _id, _plate, _origin, _destiny, _departure, _arriving, _status, _departure_gate, _take_off_track, _arriving_gate, _landing_track, _pilot, _copilot, _attendants):#
+		self.id = _id#
+		self.plate = _plate#
+		self.origin = _origin#
+		self.destiny = _destiny#
+		self.departure = _departure#
+		self.arriving = _arriving#
+		self.status = _status#
+		self.departure_gate = _departure_gate#
+		self.take_off_track = _take_off_track#
+		self.arriving_gate = _arriving_gate#
+		self.landing_track = _landing_track#
+		self.pilot = _pilot#
+		self.copilot = _copilot#
+		self.attendants = _attendants#
 
 #Esta clase, así como attendants, van de inicio con el pass porque, a diferencia de las demás, es más conveniente que se inicialice de esa forma
 class Travellers(Pilot):
@@ -287,31 +287,31 @@ class Checkpoint_check:
 
 		return cut
 
-class Flights_actual:
-	def flights_off(self):
-		flights_off = 0
+class Flights_actual:#
+	def flights_off(self):#
+		flights_off = 0#
 
-		for flight_data in AirportAD().read_flights_file().values():
-			destiny = flight_data.destiny
-			id = flight_data.id
-			for plates in cut:
-				if destiny == "Ciudad de Mexico - MEXICO" and plates[0:5] == id:
-					flights_off += 1
+		for flight_data in AirportAD().read_flights_file().values():#
+			destiny = flight_data.destiny#
+			id = flight_data.id#
+			for plates in cut:#
+				if destiny == "Ciudad de Mexico - MEXICO" and plates[0:5] == id:#
+					flights_off += 1#
 
-		return flights_off
+		return flights_off#
 	
-	def flights_taken(self):
+	def flights_taken(self):#
 
-		taken_flights = 0
+		taken_flights = 0#
 
-		for flight_data in AirportAD().read_flights_file().values():
-			origin = flight_data.origin
+		for flight_data in AirportAD().read_flights_file().values():#
+			origin = flight_data.origin#
 			id = flight_data.id
-			for plates in cut:
-				if origin == "Ciudad de Mexico - MEXICO" and plates[0:5] == id:
+			for plates in cut:#
+				if origin == "Ciudad de Mexico - MEXICO" and plates[0:5] == id:#
 					taken_flights += 1
 
-		return taken_flights
+		return taken_flights#
 
 class tracks_checkMode:
 	def nEmpty_tracks(self, _YYMMDD, _HHMM):
