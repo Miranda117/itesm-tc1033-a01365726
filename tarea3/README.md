@@ -9,3 +9,7 @@ colocarla en el centro. Las clases con parametros se colocaron en la orilla porq
 ya que no tenian asignadas las caracteristicas que anunciaban en forma de parametro.
 
 Se opto por utilizar composicion en vez de herencia debido a la variedad de parametros que podian obtenerse, ya que, a pesar de tener ciertas similitudes, separarlos despues habria sido mas dificil por la diferencia y compresion de los datos en un mismo lugar. La modularidad habria sido un poco menor.
+
+
+
+GITHUB REPO: https://github.com/Angel009/itesm-tc1033-a01365726/tree/master/tarea3
