@@ -210,7 +210,7 @@ class AirportAD:
 			gender = fields[5]
 			marital_status = fields[6]
 
-			attendant = Attendants(passport, forename, surname, date_of_birth, country, gender, marital_status)
+			attendant = Attendants(passport, forename, surname, date_of_birth, country, marital_status,gender)
 			attendants[passport] = attendant
 		return attendants
 
@@ -220,7 +220,6 @@ class AirportAD:
 		lines.pop(0)
 
 		planes = {}
-
 		for line in lines:
 			fields = line.split(",")
 			plate = fields[0]
@@ -387,4 +386,41 @@ class Gates_check:#
 	def cBusy_list(self):
 
 		return bGate_list
+class ModificarDatos:
+	def modify_attendants(self,_passport_t,_marital_status):
+		modification_for_attendants = AirportAD().read_attendants_file()
+		modification_for_attendants[_passport_t].marital_status= _marital_status 
+		return modification_for_attendants
+    
+	
+	def modify_travellers(self,_passport_travellers,_civil_status,_gener,_birthdate,name,surname_):
+		modification_for_travellers=AirportAD().read_travellers_file()
+		modification_for_travellers[_passport_travellers].marital_status=_civil_status
+		modification_for_travellers[_passport_travellers].gender=_gener
+		modification_for_travellers[_passport_travellers].date_of_birth=_birthdate
+		modification_for_travellers[_passport_travellers].forename=name
+		modification_for_travellers[_passport_travellers].surname=surname_
+		return modification_for_travellers
+		
+	def modify_passenger_data(self,_flight_passanger,_passport_passangert,_seat_,_flight_class_,_location_):
+		modification_for_passenger=AirportAD().read_passengers_file()
+		modification_for_passenger[_flight_passanger +_passport_passangert].seat=_seat_
+		modification_for_passenger[_flight_passanger +_passport_passangert].flight_class=_flight_class_
+		modification_for_passenger[_flight_passanger + _passport_passangert].location=_location_
+			
+	def modify_pilot_data(self,_passport_pilots,_marital_status_p):
+		modification_for_pilots=AirportAD().read_pilots_file()
+		modification_for_pilots[_passport_pilots].marital_status=_marital_status_p
+		return modification_for_pilots
 
+
+	def modify_flight(self,id_op,__plate,_status,_door,_track,_attendants,_pilots_for_fligth,_copilot_):
+		modidication_for_pilots=AirportAD().read_flights_file()
+		modidication_for_pilots[id_op+__plate].pilot=_pilots_for_fligth
+		modidication_for_pilots[id_op+__plate].attendants=_attendants
+		modidication_for_pilots[id_op+__plate].copilot=_copilot_
+		modidication_for_pilots[id_op+__plate].status =_status
+		modidication_for_pilots[id_op+__plate].departure_gate=_door
+		modidication_for_pilots[id_op+__plate].take_off_track=_track
+		return modidication_for_pilots		
+        
