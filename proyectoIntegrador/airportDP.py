@@ -4,7 +4,7 @@
 import csv
 from airportUI import *
 #Gran parte de la esstructura fue hecha en el salon de clases
-class Passengers:#
+class Passengers:
 	def __init__(self, _flight, _passport, _flight_class, _seat, _location):#
 		self.flight = _flight#
 		self.passport = _passport#
@@ -44,7 +44,7 @@ class Attendants(Pilot):#
                  #errors='ignore') as fdata:
 # -*- coding: utf-8 -*-
 #Dado que no se obtenian los resultados esperados, se decidio eliminarlos desde el archivo.
-class Flights:#
+class Flights:
 	def __init__(self, _id, _plate, _origin, _destiny, _departure, _arriving, _status, _departure_gate, _take_off_track, _arriving_gate, _landing_track, _pilot, _copilot, _attendants):#
 		self.id = _id#
 		self.plate = _plate#
